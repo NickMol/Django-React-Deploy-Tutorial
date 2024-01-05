@@ -23,7 +23,7 @@ class Project(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     comments = models.CharField(max_length=500, blank=True, null=True)
-    check1 = models.CharField(max_length=500, blank=True, null=True)
+    check1 = models.CharField(max_length=500, blank=True, null=True) 
     check2 = models.CharField(max_length=500, blank=True, null=True)
     status = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
