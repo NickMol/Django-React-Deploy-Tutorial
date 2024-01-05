@@ -33,12 +33,12 @@ jobs:
           cd backend 
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
+        
       - name: Collect static files
         run: |
           cd backend 
-          python -m manage.py collectstatic --noinput  
-        
+          python manage.py collectstatic --noinput
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
