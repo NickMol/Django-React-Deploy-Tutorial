@@ -83,8 +83,6 @@ const Home = () => {
             />
         }
 
-        <div>{import.meta.env.MODE}</div>
-
     </div>
   )
 }
