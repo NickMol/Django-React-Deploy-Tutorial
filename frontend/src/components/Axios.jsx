@@ -12,4 +12,4 @@ const AxiosInstance = axios.create({
     }
 })
 
-export default AxiosInstance
+export default AxiosInstance 
