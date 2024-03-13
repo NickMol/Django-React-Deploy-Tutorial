@@ -11,10 +11,12 @@ import Dayjs from 'dayjs'
 import {useNavigate} from 'react-router-dom'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import MyMultiSelectField from './forms/MyMultiSelectField'
 
 const Create = () => {
 
   const [projectmanager,setProjectmanager] = useState()
+  const [employees,setEmployees] = useState()
   const [loading,setLoading] = useState(true)
 
   const hardcoded_options = [
@@ -27,6 +29,9 @@ const Create = () => {
   const GetData = () => {
     AxiosInstance.get(`projectmanager/`).then((res) =>{
       setProjectmanager(res.data)
+    });
+    AxiosInstance.get(`employees/`).then((res) =>{
+      setEmployees(res.data)
       console.log(res.data)
       setLoading(false)
     })
@@ -48,6 +53,7 @@ const Create = () => {
   .object({
     name: yup.string().required('Name is a required field'),
     projectmanager: yup.string().required('Project manager is a required field'),
+    employees: yup.array().min(1, 'Pick at least one option'),
     status: yup.string().required('Status is a required field'),
     comments: yup.string(), 
     start_date: yup.date().required('Start date is a required field'), 
@@ -62,20 +68,24 @@ const Create = () => {
     {
       const StartDate = Dayjs(data.start_date["$d"]).format("YYYY-MM-DD")
       const EndDate = Dayjs(data.end_date["$d"]).format("YYYY-MM-DD")
+
+      console.log(data)
+      console.log("imp data", data.module_toegang)
       
-      AxiosInstance.post( `project/`,{
-        name: data.name,
-        projectmanager: data.projectmanager,
-        status: data.status,
-        comments: data.comments, 
-        start_date: StartDate, 
-        end_date: EndDate,
+      // AxiosInstance.post( `project/`,{
+      //   name: data.name,
+      //   projectmanager: data.projectmanager,
+      //   employees: data.employees,
+      //   status: data.status,
+      //   comments: data.comments, 
+      //   start_date: StartDate, 
+      //   end_date: EndDate,
 
-      })
+      // })
 
-      .then((res) =>{
-        navigate(`/`)
-      })
+      // .then((res) =>{
+      //   navigate(`/`)
+      // })
 
 
     }
@@ -154,6 +164,13 @@ const Create = () => {
           </Box>
 
           <Box sx={{display:'flex', justifyContent:'start', marginTop:'40px'}}> 
+                    <MyMultiSelectField
+                      label="Employees"
+                      name="employees"
+                      control={control}
+                      width={'30%'}
+                      options = {employees}
+                  />
                 <Button variant="contained" type="submit" sx={{width:'30%'}}>
                    Submit
                 </Button>
